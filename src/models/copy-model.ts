@@ -32,13 +32,13 @@ export class CopyModel extends DataModel {
 
       row.push(product);          // Product
       row.push(region);           // Region
-      row.push(q1.toLocaleString());  // Q1
-      row.push(q2.toLocaleString());  // Q2
-      row.push(q3.toLocaleString());  // Q3
-      row.push(q4.toLocaleString());  // Q4
-      row.push(total.toLocaleString()); // Total
+      row.push(String(q1));           // Q1
+      row.push(String(q2));           // Q2
+      row.push(String(q3));           // Q3
+      row.push(String(q4));           // Q4
+      row.push(String(total));        // Total
       row.push(`${growth}%`);     // Growth
-      row.push(target.toLocaleString()); // Target
+      row.push(String(target));       // Target
       row.push(prng.pick(COPY_STATUSES)); // Status
 
       this._data.push(row);

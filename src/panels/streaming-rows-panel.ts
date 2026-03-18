@@ -2,13 +2,14 @@ import { TextRenderer } from '@lumino/datagrid';
 import { GridPanel } from './grid-panel';
 import { StreamingRowsModel } from '../models/streaming-rows-model';
 import { TimerManager } from '../timer-manager';
+import { themeAwareTextColor } from '../theme';
 
 export function createStreamingRowsPanel(timerManager: TimerManager, seed: number): GridPanel {
   const model = new StreamingRowsModel(timerManager, seed, 200);
 
   const renderer = new TextRenderer({
     font: '12px "SF Mono", "Fira Code", Consolas, monospace',
-    textColor: '#1a1a1a',
+    textColor: () => themeAwareTextColor(),
     backgroundColor: '',
     horizontalAlignment: 'right',
     verticalAlignment: 'center',

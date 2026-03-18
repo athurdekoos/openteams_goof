@@ -87,5 +87,7 @@ export class TimerManager {
       if (entry.handle !== null) clearInterval(entry.handle);
     }
     this._timers.clear();
+    this._paused = false;
+    this._frequencyFactor = 1;
   }
 }

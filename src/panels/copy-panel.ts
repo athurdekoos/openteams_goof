@@ -1,13 +1,14 @@
-import { TextRenderer, CellRenderer } from '@lumino/datagrid';
+import { TextRenderer, CellRenderer, DataGrid } from '@lumino/datagrid';
 import { GridPanel } from './grid-panel';
 import { CopyModel } from '../models/copy-model';
+import { themeAwareTextColor } from '../theme';
 
 export function createCopyPanel(seed: number): GridPanel {
   const model = new CopyModel(seed);
 
   const renderer = new TextRenderer({
     font: '12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-    textColor: '#1a1a1a',
+    textColor: () => themeAwareTextColor(),
     backgroundColor: (config: CellRenderer.CellConfig) =>
       config.row % 2 === 0 ? '#ffffff' : '#f8fafc',
     horizontalAlignment: (config: CellRenderer.CellConfig) => {
@@ -36,7 +37,7 @@ export function createCopyPanel(seed: number): GridPanel {
   panel.grid.copyConfig = {
     separator: '\t',
     headers: 'all',
-    format: (config: any) => config.value as string,
+    format: (args: DataGrid.CopyFormatArgs) => String(args.value),
     warningThreshold: 1e8,
   };
 

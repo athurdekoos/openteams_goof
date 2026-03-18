@@ -45,6 +45,9 @@ export function importState(): Promise<WorkbenchState | null> {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.json';
+    input.addEventListener('cancel', () => {
+      resolve(null);
+    });
     input.addEventListener('change', async () => {
       const file = input.files?.[0];
       if (!file) {

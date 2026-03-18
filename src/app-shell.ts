@@ -10,7 +10,6 @@ export class AppShell extends BoxPanel {
     this.addClass('app-shell');
     this.id = 'app-shell';
 
-    // Placeholder toolbar until Phase 6
     this._toolbarPlaceholder = new Widget();
     this._toolbarPlaceholder.addClass('toolbar');
     this._toolbarPlaceholder.id = 'toolbar';

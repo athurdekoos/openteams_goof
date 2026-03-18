@@ -6,11 +6,13 @@ import { FIRST_NAMES, LAST_NAMES, STATUSES } from '../data/word-lists';
 const TOTAL_ROWS = 50;
 const DEPARTMENTS = ['Engineering', 'Sales', 'Marketing', 'HR', 'Finance', 'Legal', 'Support', 'Product'];
 
+type CellValue = string | number;
+
 export class EditableModel extends MutableDataModel {
   private _seed: number;
-  private _edits = new Map<string, any>();
+  private _edits = new Map<string, CellValue>();
   private _errors = new Map<string, string>();
-  private _cache = new Map<number, any[]>();
+  private _cache = new Map<number, CellValue[]>();
 
   constructor(seed: number) {
     super();
@@ -45,7 +47,7 @@ export class EditableModel extends MutableDataModel {
     if (region !== 'body') return {};
     const col = EDITABLE_COLUMNS[column];
     const key = `${row}:${column}`;
-    const result: any = {
+    const result: DataModel.Metadata & { error?: string; edited?: boolean } = {
       type: col?.type ?? 'string',
       editable: col?.editable ?? false,
     };
@@ -84,7 +86,7 @@ export class EditableModel extends MutableDataModel {
     this._errors.delete(key);
 
     // Convert to appropriate type
-    let finalValue: any = strValue;
+    let finalValue: CellValue = strValue;
     if (col.type === 'number') {
       finalValue = Number(strValue);
     }
@@ -113,7 +115,7 @@ export class EditableModel extends MutableDataModel {
     return this._edits.size;
   }
 
-  private _getBaseValue(row: number, column: number): any {
+  private _getBaseValue(row: number, column: number): CellValue {
     let rowData = this._cache.get(row);
     if (!rowData) {
       rowData = this._generateRow(row);
@@ -122,7 +124,7 @@ export class EditableModel extends MutableDataModel {
     return rowData[column];
   }
 
-  private _generateRow(row: number): any[] {
+  private _generateRow(row: number): CellValue[] {
     const prng = SeededPRNG.forPosition(this._seed, row, 0);
     const firstName = prng.pick(FIRST_NAMES);
     const lastName = prng.pick(LAST_NAMES);

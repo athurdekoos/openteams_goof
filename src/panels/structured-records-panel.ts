@@ -2,13 +2,14 @@ import { TextRenderer } from '@lumino/datagrid';
 import { GridPanel } from './grid-panel';
 import { StructuredRecordsModel } from '../models/structured-records-model';
 import { RECORD_COLUMNS } from '../data/column-schemas';
+import { themeAwareTextColor } from '../theme';
 
 export function createStructuredRecordsPanel(seed: number): GridPanel {
   const model = new StructuredRecordsModel(seed);
 
   const renderer = new TextRenderer({
     font: '12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-    textColor: '#1a1a1a',
+    textColor: () => themeAwareTextColor(),
     backgroundColor: (config) => config.row % 2 === 0 ? '#ffffff' : '#f8fafc',
     horizontalAlignment: (config) => {
       const col = RECORD_COLUMNS[config.column];

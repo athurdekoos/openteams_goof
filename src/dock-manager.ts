@@ -1,4 +1,5 @@
 import { DockPanel, Widget } from '@lumino/widgets';
+import { JSONValue } from '@lumino/coreutils';
 import { SeededPRNG } from './prng';
 import { TimerManager } from './timer-manager';
 import { createExtremeVirtualizationPanel } from './panels/extreme-virtualization-panel';
@@ -82,12 +83,12 @@ export class DockManager {
     return this._panels.get(id);
   }
 
-  saveLayout(): any {
+  saveLayout(): JSONValue {
     const layout = this._dock.saveLayout();
     return this._serializeLayout(layout);
   }
 
-  restoreLayout(config: any): boolean {
+  restoreLayout(config: JSONValue): boolean {
     try {
       const layout = this._deserializeLayout(config);
       if (layout) {
@@ -100,17 +101,16 @@ export class DockManager {
     return false;
   }
 
-  private _serializeLayout(layout: any): any {
-    if (!layout) return null;
+  private _serializeLayout(layout: DockPanel.ILayoutConfig): JSONValue {
     return JSON.parse(JSON.stringify(layout, (key, value) => {
       if (key === 'widgets' && Array.isArray(value)) {
-        return value.map((w: any) => (w && w.id) ? w.id : null);
+        return value.map((w: Widget | null) => (w && w.id) ? w.id : null);
       }
       return value;
     }));
   }
 
-  private _deserializeLayout(config: any): DockPanel.ILayoutConfig | null {
+  private _deserializeLayout(config: JSONValue): DockPanel.ILayoutConfig | null {
     if (!config) return null;
     const resolved = JSON.parse(JSON.stringify(config), (key, value) => {
       if (key === 'widgets' && Array.isArray(value)) {

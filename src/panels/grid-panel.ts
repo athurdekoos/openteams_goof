@@ -1,5 +1,6 @@
 import { BoxPanel, Widget } from '@lumino/widgets';
 import { DataGrid, DataModel, TextRenderer, BasicSelectionModel, CellRenderer } from '@lumino/datagrid';
+import { themeAwareTextColor } from '../theme';
 
 export interface GridPanelOptions {
   id: string;
@@ -36,7 +37,7 @@ export class GridPanel extends BoxPanel {
     // DataGrid — it IS a Widget, so add it directly for proper layout
     const defaultRenderer = options.defaultRenderer || new TextRenderer({
       font: '12px "SF Mono", "Fira Code", Consolas, monospace',
-      textColor: '#1a1a1a',
+      textColor: () => themeAwareTextColor(),
       backgroundColor: '',
       horizontalAlignment: 'left',
       verticalAlignment: 'center',
@@ -70,9 +71,14 @@ export class GridPanel extends BoxPanel {
     this.addWidget(statusWidget);
   }
 
-  setStatus(html: string): void {
+  setStatus(text: string): void {
     const info = this._statusNode.querySelector('.status-info');
-    if (info) info.innerHTML = html;
+    if (info) info.textContent = text;
+  }
+
+  dispose(): void {
+    this.grid.dispose();
+    super.dispose();
   }
 
   setStatusBadge(state: 'running' | 'paused'): void {

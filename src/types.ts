@@ -4,21 +4,13 @@ export interface PanelConfig {
   description: string;
 }
 
-export interface TimerEntry {
-  id: string;
-  callback: () => void;
-  interval: number;
-  handle: ReturnType<typeof setInterval> | null;
-  paused: boolean;
-}
-
 export interface WorkbenchState {
   version: number;
   theme: 'light' | 'dark';
   density: 'compact' | 'comfortable';
   seed: number;
   hudVisible: boolean;
-  layout?: unknown;
+  layout?: import('@lumino/coreutils').JSONValue;
   panelSettings?: Record<string, unknown>;
 }
 

@@ -14,8 +14,8 @@ export class HudManager {
   private _fpsSampler: FpsSampler;
   private _registrations: GridRegistration[] = [];
   private _timerManager: TimerManager;
-  private _updateHandle: ReturnType<typeof setInterval> | null = null;
   private _updateInterval: number;
+  private _timerId = 'hud-update';
 
   constructor(timerManager: TimerManager, updateInterval = 500) {
     this._timerManager = timerManager;
@@ -72,15 +72,11 @@ export class HudManager {
   }
 
   private _startUpdating(): void {
-    if (this._updateHandle) return;
-    this._updateHandle = setInterval(() => this._update(), this._updateInterval);
+    this._timerManager.register(this._timerId, () => this._update(), this._updateInterval);
   }
 
   private _stopUpdating(): void {
-    if (this._updateHandle) {
-      clearInterval(this._updateHandle);
-      this._updateHandle = null;
-    }
+    this._timerManager.unregister(this._timerId);
   }
 
   private _update(): void {

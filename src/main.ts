@@ -86,13 +86,13 @@ function main(): void {
   commands.addCommand('app:set-seed', {
     label: 'Set Seed',
     execute: (args) => {
-      seed = (args as any).seed ?? DEFAULT_SEED;
+      seed = (args.seed as number) ?? DEFAULT_SEED;
       timerManager.dispose();
 
-      // Remove existing widgets
+      // Dispose existing widgets
       const widgets: Widget[] = [];
       for (const w of shell.dock.widgets()) widgets.push(w);
-      for (const w of widgets) w.parent = null;
+      for (const w of widgets) w.dispose();
 
       // Rebuild
       dockManager = new DockManager(shell.dock, seed, timerManager);
@@ -117,7 +117,7 @@ function main(): void {
   commands.addCommand('app:set-frequency', {
     label: 'Set Frequency',
     execute: (args) => {
-      const value = (args as any).value ?? 50;
+      const value = (args.value as number) ?? 50;
       // Map 1-100 slider: 1=slow(4x), 50=normal(1x), 100=fast(0.25x)
       const factor = Math.pow(2, (50 - value) / 25);
       timerManager.setGlobalFrequency(factor);

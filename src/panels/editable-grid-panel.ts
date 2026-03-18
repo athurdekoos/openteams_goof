@@ -1,7 +1,8 @@
-import { TextRenderer, CellRenderer } from '@lumino/datagrid';
+import { TextRenderer, CellRenderer, DataModel } from '@lumino/datagrid';
 import { GridPanel } from './grid-panel';
 import { EditableModel } from '../models/editable-model';
 import { EDITABLE_COLUMNS } from '../data/column-schemas';
+import { themeAwareTextColor } from '../theme';
 
 function editableBg(config: CellRenderer.CellConfig): string {
   const col = EDITABLE_COLUMNS[config.column];
@@ -17,10 +18,10 @@ export function createEditableGridPanel(seed: number): GridPanel {
   const renderer = new TextRenderer({
     font: '12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     textColor: (config) => {
-      const meta = model.metadata('body', config.row, config.column) as any;
+      const meta = model.metadata('body', config.row, config.column) as DataModel.Metadata & { error?: string; edited?: boolean };
       if (meta.error) return '#dc2626';
       if (meta.edited) return '#2563eb';
-      return '#1a1a1a';
+      return themeAwareTextColor();
     },
     backgroundColor: editableBg,
     horizontalAlignment: (config) => {

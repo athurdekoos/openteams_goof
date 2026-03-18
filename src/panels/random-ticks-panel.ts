@@ -27,7 +27,7 @@ export function createRandomTicksPanel(
       ? 'Rapid cell mutations with viridis heat-map rendering. Each cell value maps to a color gradient.'
       : 'Rapid cell mutations with color-coded numeric rendering. Red = mid range, green = high values.',
     model,
-    defaultRenderer: renderer as any,
+    defaultRenderer: renderer,
   });
 
   model.start();

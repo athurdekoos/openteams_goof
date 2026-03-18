@@ -44,7 +44,9 @@ export class RandomTicksModel extends BaseLiveModel {
     if (region === 'column-header') return `C${column}`;
     if (region === 'row-header') return `${row}`;
     if (region === 'corner-header') return '';
-    return this._data[row * this._cols + column];
+    const idx = row * this._cols + column;
+    if (idx < 0 || idx >= this._data.length) return 0;
+    return this._data[idx];
   }
 
   get updateCount(): number { return this._updateCount; }
@@ -53,11 +55,28 @@ export class RandomTicksModel extends BaseLiveModel {
 
   protected tick(): void {
     this._updateCount++;
-    // Mutate random cells
+    // Mutate random cells and track bounding region
+    let minRow = this._rows;
+    let maxRow = 0;
+    let minCol = this._cols;
+    let maxCol = 0;
     for (let i = 0; i < this._cellsPerTick; i++) {
       const idx = this._prng.nextInt(0, this._data.length);
       this._data[idx] = this._prng.next();
+      const row = Math.floor(idx / this._cols);
+      const col = idx % this._cols;
+      if (row < minRow) minRow = row;
+      if (row > maxRow) maxRow = row;
+      if (col < minCol) minCol = col;
+      if (col > maxCol) maxCol = col;
     }
-    this.emitChanged({ type: 'model-reset' });
+    this.emitChanged({
+      type: 'cells-changed',
+      region: 'body',
+      row: minRow,
+      column: minCol,
+      rowSpan: maxRow - minRow + 1,
+      columnSpan: maxCol - minCol + 1,
+    });
   }
 }

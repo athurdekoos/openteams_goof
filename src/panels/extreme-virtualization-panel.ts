@@ -1,13 +1,14 @@
 import { TextRenderer } from '@lumino/datagrid';
 import { GridPanel } from './grid-panel';
 import { ExtremeVirtualizationModel } from '../models/extreme-virtualization-model';
+import { themeAwareTextColor } from '../theme';
 
 export function createExtremeVirtualizationPanel(seed: number): GridPanel {
   const model = new ExtremeVirtualizationModel(seed);
 
   const renderer = new TextRenderer({
     font: '12px "SF Mono", "Fira Code", Consolas, monospace',
-    textColor: '#1a1a1a',
+    textColor: () => themeAwareTextColor(),
     backgroundColor: '',
     horizontalAlignment: 'right',
     verticalAlignment: 'center',

@@ -71,14 +71,20 @@ describe('RandomTicksModel', () => {
     expect(changed).toBeGreaterThan(0);
   });
 
-  it('tick emits model-reset', () => {
+  it('tick emits cells-changed with bounding region', () => {
     const model = new RandomTicksModel(tm, 'rt1', 42, 10, 10, 100);
     const listener = vi.fn();
     model.changed.connect(listener);
     model.start();
     vi.advanceTimersByTime(100);
     expect(listener).toHaveBeenCalled();
-    expect(listener.mock.calls[0][1]).toEqual({ type: 'model-reset' });
+    const event = listener.mock.calls[0][1];
+    expect(event.type).toBe('cells-changed');
+    expect(event.region).toBe('body');
+    expect(event.row).toBeGreaterThanOrEqual(0);
+    expect(event.column).toBeGreaterThanOrEqual(0);
+    expect(event.rowSpan).toBeGreaterThan(0);
+    expect(event.columnSpan).toBeGreaterThan(0);
   });
 
   it('updateCount increments', () => {

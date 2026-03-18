@@ -79,14 +79,29 @@ export class StreamingRowsModel extends BaseLiveModel {
         span: count,
       });
     } else {
-      // Mutate a few cells
+      // Mutate a few cells and track bounding region
       const mutations = this._prng.nextInt(1, 6);
+      let minRow = this._rows.length;
+      let maxRow = 0;
+      let minCol = NUM_COLS;
+      let maxCol = 0;
       for (let i = 0; i < mutations; i++) {
         const r = this._prng.nextInt(0, this._rows.length);
         const c = this._prng.nextInt(0, NUM_COLS);
         this._rows[r][c] = this._prng.next() * 1000;
+        if (r < minRow) minRow = r;
+        if (r > maxRow) maxRow = r;
+        if (c < minCol) minCol = c;
+        if (c > maxCol) maxCol = c;
       }
-      this.emitChanged({ type: 'model-reset' });
+      this.emitChanged({
+        type: 'cells-changed',
+        region: 'body',
+        row: minRow,
+        column: minCol,
+        rowSpan: maxRow - minRow + 1,
+        columnSpan: maxCol - minCol + 1,
+      });
     }
   }
 }

@@ -63,6 +63,14 @@ export function getGridStyle(theme: Theme): DataGrid.Style {
   return theme === 'dark' ? DARK_STYLE : LIGHT_STYLE;
 }
 
+export function getTextColor(theme: Theme): string {
+  return theme === 'dark' ? '#e2e8f0' : '#1a1a1a';
+}
+
+export function themeAwareTextColor(): string {
+  return document.body.classList.contains('theme-dark') ? '#e2e8f0' : '#1a1a1a';
+}
+
 export function getGridSizes(density: Density): {
   defaultRowHeight: number;
   defaultColumnWidth: number;

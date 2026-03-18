@@ -1,6 +1,7 @@
 import { TextRenderer, CellRenderer } from '@lumino/datagrid';
 import { GridPanel } from './grid-panel';
 import { MergedCellsModel } from '../models/merged-cells-model';
+import { themeAwareTextColor } from '../theme';
 
 export function createMergedCellsPanel(seed: number): GridPanel {
   const model = new MergedCellsModel(seed);
@@ -9,7 +10,7 @@ export function createMergedCellsPanel(seed: number): GridPanel {
     font: '11px "SF Mono", "Fira Code", Consolas, monospace',
     textColor: (config: CellRenderer.CellConfig) => {
       const val = String(config.value);
-      return val.startsWith('M[') ? '#2563eb' : '#1a1a1a';
+      return val.startsWith('M[') ? '#2563eb' : themeAwareTextColor();
     },
     backgroundColor: (config: CellRenderer.CellConfig) => {
       const val = String(config.value);
