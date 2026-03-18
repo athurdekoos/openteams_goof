@@ -1,0 +1,55 @@
+.grid-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-panel);
+}
+
+.grid-panel-description {
+  padding: 6px 12px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.grid-panel-body {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.grid-panel-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 3px 12px;
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--status-bg);
+  border-top: 1px solid var(--status-border);
+  flex-shrink: 0;
+  min-height: 22px;
+}
+
+.grid-panel-status .status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.running {
+  background: rgba(22, 163, 74, 0.15);
+  color: var(--success);
+}
+
+.status-badge.paused {
+  background: rgba(217, 119, 6, 0.15);
+  color: var(--warning);
+}

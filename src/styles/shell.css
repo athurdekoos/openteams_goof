@@ -1,0 +1,32 @@
+body {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.app-shell {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.lm-DockPanel {
+  flex: 1;
+}
+
+/* Ensure dock panel tabs are styled */
+.lm-DockPanel-tabBar {
+  min-height: 28px;
+}
+
+.lm-TabBar-tab {
+  padding: 4px 12px;
+  font-size: 12px;
+}
+
+.lm-TabBar-tab.lm-mod-current {
+  font-weight: 600;
+}

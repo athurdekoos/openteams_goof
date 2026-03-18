@@ -1,0 +1,9 @@
+.density-compact .lm-DataGrid {
+  --row-height: 20px;
+  --col-width: 80px;
+}
+
+.density-comfortable .lm-DataGrid {
+  --row-height: 30px;
+  --col-width: 120px;
+}

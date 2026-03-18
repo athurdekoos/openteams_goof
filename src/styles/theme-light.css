@@ -1,0 +1,33 @@
+.theme-light {
+  --bg-primary: #f5f5f5;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e8e8e8;
+  --bg-panel: #ffffff;
+  --text-primary: #1a1a1a;
+  --text-secondary: #555555;
+  --text-muted: #888888;
+  --border-color: #d0d0d0;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-text: #ffffff;
+  --success: #16a34a;
+  --warning: #d97706;
+  --error: #dc2626;
+  --toolbar-bg: #e2e8f0;
+  --toolbar-border: #cbd5e1;
+  --status-bg: #f1f5f9;
+  --status-border: #e2e8f0;
+  --hud-bg: rgba(0, 0, 0, 0.75);
+  --hud-text: #00ff88;
+
+  /* DataGrid theme */
+  --grid-void: #f0f0f0;
+  --grid-bg: #ffffff;
+  --grid-row-bg-alt: #f8fafc;
+  --grid-header-bg: #e2e8f0;
+  --grid-header-text: #1e293b;
+  --grid-border: #e0e0e0;
+  --grid-selection: rgba(37, 99, 235, 0.15);
+  --grid-cursor: rgba(37, 99, 235, 0.3);
+  --grid-text: #1a1a1a;
+}

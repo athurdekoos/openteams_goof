@@ -1,0 +1,35 @@
+.hud-overlay {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  padding: 6px 10px;
+  background: var(--hud-bg);
+  color: var(--hud-text);
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 10px;
+  line-height: 1.6;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 1000;
+  white-space: pre;
+  min-width: 160px;
+}
+
+.hud-overlay.hidden {
+  display: none;
+}
+
+.hud-field {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.hud-label {
+  opacity: 0.7;
+}
+
+.hud-value {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
